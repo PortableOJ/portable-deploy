@@ -1,0 +1,18 @@
+server {
+    listen       80;
+    listen  [::]:80;
+
+    charset utf-8;
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html;
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ^~ /api {
+        proxy_pass http://server:8080;
+        include    /etc/nginx/conf.d/proxy.conf;
+    }
+}

@@ -1,0 +1,58 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+    sql:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456
+            - MYSQL_DATABASE=portable_oj
+        volumes:
+            - ./mysql:/var/lib/mysql
+            - ./portable_oj.sql:/docker-entrypoint-initdb.d/portable_oj.sql
+
+    nosql:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+            - ./mongo:/data/db
+
+    redis:
+        image: redis
+        ports:
+           - 6379:6379
+
+    server:
+        image: 998244353/portable-server
+        restart: always
+        environment:
+            - JAVA_OPTS=-Xmx1G
+            - ROOT_NAME=root
+            - ROOT_PWD=123456
+            - MYSQL_URL=sql
+            - MYSQL_PORT=3306
+            - MYSQL_ROOT_PWD=123456
+            - MONGO_URL=nosql
+            - MONGO_PORT=27017
+            - REDIS_URL=redis
+            - REDIS_PORT=6379
+            - HOME=/root
+        volumes:
+            - ./data:/root
+        ports:
+            - 8080:8080
+            - 9090:9090
+
+    web:
+        image: 998244353/portable-web
+        restart: always
+        volumes:
+            - ./templates:/etc/nginx/templates
+        ports:
+            - 80:80
