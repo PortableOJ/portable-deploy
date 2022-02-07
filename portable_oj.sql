@@ -32,7 +32,7 @@ CREATE TABLE `problem` (
   `owner` bigint DEFAULT NULL COMMENT '拥有者',
   PRIMARY KEY (`id`),
   KEY `idx_access_type_owner` (`access_type`,`owner`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for solution
@@ -52,7 +52,7 @@ CREATE TABLE `solution` (
   `memory_cost` int DEFAULT NULL COMMENT '提交的内存消耗，非 Accept 的则可能为 null',
   PRIMARY KEY (`id`),
   UNIQUE KEY `solution_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for user
@@ -66,6 +66,6 @@ CREATE TABLE `user` (
   `type` varchar(64) NOT NULL COMMENT '用户类型',
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_handle_uindex` (`handle`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户登陆信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户登陆信息表';
 
 SET FOREIGN_KEY_CHECKS = 1;

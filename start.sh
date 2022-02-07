@@ -1,8 +1,7 @@
 echo "正在更新所需要的镜像文件"
 
-sudo docker pull 998244353/portable-server
 sudo docker pull 998244353/portable-judge
-sudo docker pull 998244353/portable-web
+sudo docker-compose pull
 
 echo "正在启动 server 和 web 服务"
 sudo docker-compose up -d
@@ -20,6 +19,11 @@ esac
 
 read -p "请输入 server 提供的服务器密钥：" code
 
-sudo docker run -itd --name portable_judge -e home="/root/portable" -e serverUrl="localhost" -e log="/root/portable/judge.log" -e heartbeatTime=5 -e serverCode=$code -v ./data:/root 998244353/portable-judge
+url=`ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:" | sed -n '1p'`
+wd=`pwd`
+
+echo $url $wd
+
+sudo docker run -itd --name portable_judge -e home=/root/portable -e serverUrl=${url} -e log=/root/portable/judge.log -e heartbeatTime=5 -e serverCode=${code} -v ${wd}/data:/root 998244353/portable-judge
 
 echo "启动完成"
