@@ -24,6 +24,6 @@ wd=`pwd`
 
 echo $url $wd
 
-sudo docker run -itd --name portable_judge -e home=/root/portable -e serverUrl=${url} -e log=/root/portable/judge.log -e heartbeatTime=5 -e serverCode=${code} -v ${wd}/data:/root 998244353/portable-judge
+sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable -e serverUrl=${url} -e heartbeatTime=5 -e serverCode=${code} -v ${wd}/data:/portable --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
 
 echo "启动完成"

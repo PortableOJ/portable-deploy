@@ -42,12 +42,16 @@ services:
             - MONGO_PORT=27017
             - REDIS_URL=redis
             - REDIS_PORT=6379
-            - HOME=/root
+            - HOME=/portable
         volumes:
-            - ./data:/root
+            - ./data:/portable
         ports:
             - 8080:8080
             - 9090:9090
+        logging:
+            options:
+                max-size: "10m"
+                max-file: 5
 
     web:
         image: 998244353/portable-web

@@ -3,15 +3,15 @@
 
  Source Server         : Localhost_MySQL
  Source Server Type    : MySQL
- Source Server Version : 80026
+ Source Server Version : 80028
  Source Host           : localhost:3306
  Source Schema         : portable_oj
 
  Target Server Type    : MySQL
- Target Server Version : 80026
+ Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 07/02/2022 00:31:18
+ Date: 11/02/2022 00:24:40
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `solution` (
   `time_cost` int DEFAULT NULL COMMENT '提交的耗时，非 Accept 的则可能为 null',
   `memory_cost` int DEFAULT NULL COMMENT '提交的内存消耗，非 Accept 的则可能为 null',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `solution_id_uindex` (`id`)
+  KEY `idx_solution_type_user_id` (`solution_type`,`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
