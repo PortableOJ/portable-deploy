@@ -42,9 +42,9 @@ services:
             - MONGO_PORT=27017
             - REDIS_URL=redis
             - REDIS_PORT=6379
-            - PORTABLE_HOME=/portable
+            - PORTABLE_HOME=/portable_data
         volumes:
-            - ./data:/portable
+            - ./data:/portable_data
         ports:
             - 8080:8080
             - 9090:9090
