@@ -22,8 +22,6 @@ read -p "请输入 server 提供的服务器密钥：" code
 url=`ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:" | sed -n '1p'`
 wd=`pwd`
 
-echo $url $wd
-
 sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable -e serverUrl=${url} -e heartbeatTime=5 -e serverCode=${code} -v ${wd}/data:/portable --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
 
 echo "启动完成"
