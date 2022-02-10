@@ -49,9 +49,10 @@ services:
             - 8080:8080
             - 9090:9090
         logging:
+            driver: "json-file"
             options:
                 max-size: "10m"
-                max-file: 5
+                max-file: "5"
 
     web:
         image: 998244353/portable-web
