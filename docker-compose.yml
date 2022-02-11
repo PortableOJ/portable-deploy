@@ -11,6 +11,7 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=123456
             - MYSQL_DATABASE=portable_oj
+            - MYSQL_ROOT_HOST=%
         volumes:
             - ./mysql:/var/lib/mysql
             - ./portable_oj.sql:/docker-entrypoint-initdb.d/portable_oj.sql
