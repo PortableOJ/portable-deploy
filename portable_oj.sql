@@ -11,11 +11,26 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 11/02/2022 00:24:40
+ Date: 01/03/2022 16:31:37
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for contest
+-- ----------------------------
+DROP TABLE IF EXISTS `contest`;
+CREATE TABLE `contest` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '比赛 id',
+  `data_id` varchar(32) DEFAULT NULL COMMENT '比赛数据 id',
+  `owner` bigint DEFAULT NULL COMMENT '比赛拥有者',
+  `title` varchar(255) DEFAULT NULL COMMENT '比赛标题',
+  `start_time` datetime DEFAULT NULL COMMENT '比赛开始时间',
+  `duration` int DEFAULT NULL COMMENT '比赛持续时间（分钟）',
+  `access_type` varchar(64) DEFAULT NULL COMMENT '比赛的访问权限类型',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='比赛信息';
 
 -- ----------------------------
 -- Table structure for problem

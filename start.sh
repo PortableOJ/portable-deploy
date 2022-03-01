@@ -1,3 +1,7 @@
+echo "正在关闭之前的 Judge 服务"
+
+sudo docker rm -f portable-oj_judge_1
+
 echo "正在更新所需要的镜像文件"
 
 sudo docker pull 998244353/portable-judge
@@ -6,14 +10,15 @@ sudo docker-compose pull
 echo "正在启动 server 和 web 服务"
 sudo docker-compose up -d
 read -n1 -p "是否需要在本地启动 judge [y/n]?" answer
+echo ""
 case $answer in
 Y | y)
-    echo "\n正在准备启动 judge";;
+    echo "正在准备启动 judge";;
 N | n)
-    echo "\n完成！"
+    echo "完成！"
     exit 0;;
 *)
-    echo "\n错误的答复"
+    echo "错误的答复"
     exit 0;;
 esac
 
