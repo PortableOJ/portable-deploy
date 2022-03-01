@@ -7,6 +7,10 @@ echo "正在更新所需要的镜像文件"
 sudo docker pull 998244353/portable-judge
 sudo docker-compose pull
 
+echo "正在清理过期镜像"
+
+sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
+
 echo "正在启动 server 和 web 服务"
 sudo docker-compose up -d
 read -n1 -p "是否需要在本地启动 judge [y/n]?" answer
