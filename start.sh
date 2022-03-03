@@ -1,3 +1,7 @@
+echo "正在更新启动脚本(master)"
+
+sudo git pull origin master
+
 echo "正在关闭之前的 Judge 服务"
 
 sudo docker rm -f portable-oj_judge_1
