@@ -1,19 +1,10 @@
-echo "正在更新启动脚本(master)"
-
-sudo git pull origin master
-
-echo "正在为需要使用的脚本赋予权限"
-
-sudo chmod +x ./wait-for
-
 echo "正在关闭之前的 Judge 服务"
 
 sudo docker rm -f portable-oj_judge_1
 
 echo "正在更新所需要的镜像文件"
 
-sudo docker pull 998244353/portable-judge
-sudo docker-compose pull
+sudo docker pull 998244353/portable-judge & sudo docker-compose pull
 
 echo "正在启动 server 和 web 服务"
 sudo docker-compose up -d
@@ -25,8 +16,10 @@ echo "开始清理过期镜像"
 
 sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
 
+sudo chmod +x ./wait-for
 ./wait-for localhost:8080 -- echo "服务已经就绪"
 
+# 先获取一次 serverCode，使得服务器的 serverCode 被提前获取，用来关闭此 API
 code=`curl localhost:8080/api/judge/initCode`
 
 read -n1 -p "是否需要在本地启动 judge [y/n]?" answer
