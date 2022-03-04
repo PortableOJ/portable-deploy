@@ -6,8 +6,9 @@ echo "正在更新所需要的镜像文件"
 
 sudo docker-compose pull
 
-echo "正在启动 server 和 web 服务"
+echo "正在(重新)启动 server 和 web 服务"
 
+sudo docker-compose down
 sudo docker-compose up -d
 
 echo "等待服务就绪"
@@ -23,7 +24,7 @@ sudo chmod +x ./wait-for
 # 先获取一次 serverCode，使得服务器的 serverCode 被提前获取，用来关闭此 API
 code=`curl localhost:8080/api/judge/initCode`
 
-echo ${code}
+echo "当前的 serverCode: ${code}"
 
 read -n1 -p "是否需要在本地启动 judge [y/n]?" answer
 echo ""
