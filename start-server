@@ -11,18 +11,30 @@ echo "正在(重新)启动 server 和 web 服务"
 sudo docker-compose down
 sudo docker-compose up -d
 
-echo "等待服务就绪"
-
 # 由于启动需要一定时间，所以这段时间内对镜像进行清理
 echo "开始清理过期镜像"
 
 sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
 
-sudo chmod +x ./wait-for
-./wait-for localhost:8080 -- echo "服务已经就绪"
+echo "等待服务就绪，至多需要等待一分钟"
 
-# 先获取一次 serverCode，使得服务器的 serverCode 被提前获取，用来关闭此 API
-code=`curl localhost:8080/api/judge/initCode`
+for i in {1..10}
+do
+    sleep 6
+    curl localhost:8080 &> /dev/null
+    if [ $? == 0 ]
+    then
+        # 先获取一次 serverCode，使得服务器的 serverCode 被提前获取，用来关闭此 API
+        code=`curl localhost:8080/api/judge/initCode`
+        break
+    else
+        if [ ${i} == 10 ]
+        then
+            echo "服务未在 60s 内完成启动，请检查"
+            exit 1
+        fi
+    fi
+done
 
 echo "当前的 serverCode: ${code}"
 
@@ -36,7 +48,7 @@ N | n)
     exit 0;;
 *)
     echo "错误的答复"
-    exit 0;;
+    exit 1;;
 esac
 
 echo "正在更新所需要的镜像文件"
