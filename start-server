@@ -1,6 +1,6 @@
 echo "正在关闭之前的 Judge 服务"
 
-sudo docker rm -f portable-oj_judge_1
+sudo docker rm -f portable-deploy_judge_1
 
 echo "正在更新所需要的镜像文件"
 
