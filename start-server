@@ -4,9 +4,10 @@ sudo docker rm -f portable-oj_judge_1
 
 echo "正在更新所需要的镜像文件"
 
-sudo docker pull 998244353/portable-judge & sudo docker-compose pull
+sudo docker-compose pull
 
 echo "正在启动 server 和 web 服务"
+
 sudo docker-compose up -d
 
 echo "等待服务就绪"
@@ -34,6 +35,14 @@ N | n)
     echo "错误的答复"
     exit 0;;
 esac
+
+echo "正在更新所需要的镜像文件"
+
+sudo docker pull 998244353/portable-judge
+
+echo "开始清理过期镜像"
+
+sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
 
 url=`ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:" | sed -n '1p'`
 
