@@ -23,6 +23,8 @@ sudo chmod +x ./wait-for
 # 先获取一次 serverCode，使得服务器的 serverCode 被提前获取，用来关闭此 API
 code=`curl localhost:8080/api/judge/initCode`
 
+echo ${code}
+
 read -n1 -p "是否需要在本地启动 judge [y/n]?" answer
 echo ""
 case $answer in
