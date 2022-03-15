@@ -1,39 +1,8 @@
-echo "正在关闭之前的 Judge 服务"
-
 sudo docker rm -f portable-deploy_judge_1
-
-echo "正在更新所需要的镜像文件"
-
 sudo docker-compose pull
-
-echo "正在(重新)启动 server 和 web 服务"
-
-echo -e "\033[36m+\033[36m*********************************************************\033[36m+"
-echo -e "\033[36m|\033[34m  _____           _        _     _         ____       _  \033[36m|"
-echo -e "\033[36m|\033[34m |  __ \         | |      | |   | |       / __ \     | | \033[36m|"
-echo -e "\033[36m|\033[34m | |__) |__  _ __| |_ __ _| |__ | | ___  | |  | |    | | \033[36m|"
-echo -e "\033[36m|\033[34m |  ___/ _ \| '__| __/ _  | '_ \| |/ _ \ | |  | |_   | | \033[36m|"
-echo -e "\033[36m|\033[34m | |  | (_) | |  | || (_| | |_) | |  __/ | |__| | |__| | \033[36m|"
-echo -e "\033[36m|\033[34m |_|   \___/|_|   \__\__,_|_.__/|_|\___|  \____/ \____/  \033[36m|"
-echo -e "\033[36m|\033[34m ======================================================= \033[36m|"
-echo -e "\033[36m|\033[34m                                                         \033[36m|"
-echo -e "\033[36m|\033[35m    copyright @ Portable Online Judge Team      (v0.1.0) \033[36m|"
-echo -e "\033[36m|\033[35m    (https://github.com/PortableOJ)                      \033[36m|"
-echo -e "\033[36m|\033[34m                                                         \033[36m|"
-echo -e "\033[36m|\033[31m     Open source based on GNU GENERAL PUBLIC LICENSE     \033[36m|"
-echo -e "\033[36m+\033[36m*********************************************************\033[36m*"
-
-echo -e "\033[0m"
-
 sudo docker-compose down
 sudo docker-compose up -d
-
-# 由于启动需要一定时间，所以这段时间内对镜像进行清理
-echo "开始清理过期镜像"
-
 sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
-
-echo "等待服务就绪，至多需要等待一分钟"
 
 for i in {1..10}
 do
@@ -47,39 +16,28 @@ do
     else
         if [ ${i} == 10 ]
         then
-            echo "服务未在 60s 内完成启动，请检查"
+            echo "please check the server!!!"
             exit 1
         fi
     fi
 done
 
-echo "当前的 serverCode: ${code}"
-
-read -n1 -p "是否需要在本地启动 judge [y/n]?" answer
-echo ""
-case $answer in
-Y | y)
-    echo "正在准备启动 judge";;
-N | n)
-    echo "完成！"
-    exit 0;;
-*)
-    echo "错误的答复"
-    exit 1;;
-esac
-
-echo "正在更新所需要的镜像文件"
-
-sudo docker pull 998244353/portable-judge
-
-echo "开始清理过期镜像"
-
-sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
+echo "serverCode: $code"
 
 url=`ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:" | sed -n '1p'`
 
 wd=`pwd`
 
-sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable_data -e serverUrl=${url} -e heartbeatTime=5 -e serverCode=${code} -v ${wd}/data:/portable_data --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
+case $1 in
+Y | y)
+    echo "Started a Server, now start a Judge."
+    ;;
+N | n | *)
+    echo "Started a Server without Judge."
+    exit 0
+    ;;
+esac
 
-echo "启动完成"
+sudo docker pull 998244353/portable-judge
+sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
+sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable_data -e serverUrl=${url} -e heartbeatTime=5 -e serverCode=$code -v ${wd}/data:/portable_data --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
