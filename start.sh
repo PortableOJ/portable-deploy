@@ -82,14 +82,22 @@ done
 tput cnorm
 tput clear
 
+code="./start-server"
+
+if [[ $# -gt 0 ]]; then
+    if [[ $1 -eq 'cn' ]]; then
+        code="./start-server-cn"
+    fi
+fi
+
 case $select in
     0)
-        sudo chmod +x ./start-server
-        ./start-server Y
+        sudo chmod +x ${code}
+        ${code} Y
         ;;
     1)
-        sudo chmod +x ./start-server
-        ./start-server N
+        sudo chmod +x ${code}
+        ${code} N
         ;;
     3)
         sudo git pull origin master
