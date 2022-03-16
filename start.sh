@@ -79,6 +79,9 @@ while [[ true ]]; do
     esac
 done
 
+tput cnorm
+tput clear
+
 case $select in
     0)
         sudo chmod +x ./start-server
@@ -95,5 +98,3 @@ case $select in
     4)
         ;;
 esac
-
-tput cnorm
