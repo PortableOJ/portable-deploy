@@ -50,6 +50,6 @@ N | n | *)
     ;;
 esac
 
-sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable_data -e serverUrl=${url} -e heartbeatTime=5 -e serverCode=$code -v ${wd}/data:/portable_data --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
+sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable_data -e serverUrl=${url} -e heartbeatTime=3 -e serverCode=$code -v ${wd}/data:/portable_data --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
 
 sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
