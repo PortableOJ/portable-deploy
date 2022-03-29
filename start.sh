@@ -6,7 +6,6 @@ envFile=env.sh
 if [[ ! -f $envFile ]]; then
     sudo cp setup-env.sh $envFile
 fi
-source $envFile
 
 # 显示菜单
 tput clear

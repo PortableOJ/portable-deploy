@@ -1,3 +1,5 @@
+source $envFile
+
 case $1 in
 Y | y)
     echo "Started a Server with a Judge."
