@@ -99,7 +99,7 @@ tput clear
 
 # 执行命令
 
-serverFile=./start-server.sh
+serverFile=./server.sh
 
 case $select in
     0)
