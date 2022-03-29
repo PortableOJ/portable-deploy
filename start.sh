@@ -103,11 +103,11 @@ tput clear
 
 case $select in
     0)
-        sudo chmod +x ./start-server
+        sudo chmod +x ./start-server.sh
         ./start-server Y
         ;;
     1)
-        sudo chmod +x ./start-server
+        sudo chmod +x ./start-server.sh
         ./start-server N
         ;;
     3)
