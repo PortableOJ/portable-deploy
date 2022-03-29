@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-envFile=env.sh
+envFile=.env
 
 if [[ ! -f $envFile ]]; then
     sudo cp setup-env.sh $envFile
