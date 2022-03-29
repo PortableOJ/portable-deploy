@@ -9,10 +9,8 @@ N | n | *)
     ;;
 esac
 
-sudo docker-compose -f docker-compose-cn.yml pull
-sudo docker-compose -f docker-compose-cn.yml down
-
-sudo docker-compose -f docker-compose-cn.yml up -d
+sudo docker-compose down
+sudo docker-compose up -d
 
 sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi
 
@@ -50,6 +48,6 @@ N | n | *)
     ;;
 esac
 
-sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable_data -e serverUrl=${url} -e heartbeatTime=3 -e serverCode=$code -v ${wd}/data:/portable_data --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
+sudo docker run -itd --name portable-deploy_judge_1 -e home=/portable_data -e serverUrl=${url} -e heartbeatTime=${HEART_BEAT_TIME} -e serverCode=$code -v ${wd}/data:/portable_data --log-opt max-size=10m --log-opt max-file=5 998244353/portable-judge
 
 sudo docker image ls | grep portable | grep none | awk '{print $3}' | xargs sudo docker rmi

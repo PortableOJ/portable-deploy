@@ -30,7 +30,7 @@ services:
            - 6379:6379
 
     server:
-        image: 998244353/portable-server
+        image: ${COMPOSE_SERVER_IMAGE}
         restart: always
         environment:
             - JAVA_OPTS=-Xmx1G
@@ -56,7 +56,7 @@ services:
                 max-file: "5"
 
     web:
-        image: 998244353/portable-web
+        image: ${COMPOSE_WEB_IMAGE}
         restart: always
         volumes:
             - ./templates:/etc/nginx/templates

@@ -1,4 +1,15 @@
 #!/bin/bash
+
+
+envFile=env.sh
+
+if [[ -f $envFile ]]; then
+else
+    cp setup-env.sh $envFile
+fi
+source $envFile
+
+# 显示菜单
 tput clear
 tput civis
 
@@ -55,10 +66,10 @@ showOption() {
 }
 
 while [[ true ]]; do
-    showOption 0 "Start a Server with a Judge."
-    showOption 1 "Start a Server without Judge."
-    showOption 2 "Start a remote Judge."
-    showOption 3 "Update this shell and restart."
+    showOption 0 "(re)Start a Server with a Judge."
+    showOption 1 "(re)Start a Server without Judge."
+    showOption 2 "(re)Start a remote Judge."
+    showOption 3 "Update deploy shell and restart."
     showOption 4 "Do nothing and quit."
 
     tput cup `expr ${line} + 6` `expr ${col} - 3`
@@ -71,10 +82,16 @@ while [[ true ]]; do
     fi
     case $action in
         w | W)
-            select=`expr ${select} - 1`
+            if [[ $select -gt 0 ]]
+            then
+                select=`expr ${select} - 1`
+            fi
             ;;
         s | S)
-            select=`expr ${select} + 1`
+            if [[ $select -lt 4 ]]
+            then
+                select=`expr ${select} + 1`
+            fi
             ;;
     esac
 done
@@ -82,22 +99,16 @@ done
 tput cnorm
 tput clear
 
-code="./start-server"
-
-if [[ $# -gt 0 ]]; then
-    if [[ $1 -eq 'cn' ]]; then
-        code="./start-server-cn"
-    fi
-fi
+# 执行命令
 
 case $select in
     0)
-        sudo chmod +x ${code}
-        ${code} Y
+        sudo chmod +x ./start-server
+        ./start-server Y
         ;;
     1)
-        sudo chmod +x ${code}
-        ${code} N
+        sudo chmod +x ./start-server
+        ./start-server N
         ;;
     3)
         sudo git pull origin master
