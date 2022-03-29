@@ -100,14 +100,16 @@ tput clear
 
 # 执行命令
 
+serverFile=./start-server.sh
+
 case $select in
     0)
-        sudo chmod +x ./start-server.sh
-        ./start-server Y
+        sudo chmod +x $serverFile
+        $serverFile Y
         ;;
     1)
-        sudo chmod +x ./start-server.sh
-        ./start-server N
+        sudo chmod +x $serverFile
+        $serverFile N
         ;;
     3)
         sudo git pull origin master
