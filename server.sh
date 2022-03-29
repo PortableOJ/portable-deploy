@@ -1,4 +1,5 @@
-source $envFile
+source setup-env.sh
+source env.sh
 
 case $1 in
 Y | y)
