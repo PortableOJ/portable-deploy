@@ -4,7 +4,7 @@
 envFile=env.sh
 
 if [[ ! -f $envFile ]]; then
-    cp setup-env.sh $envFile
+    sudo cp setup-env.sh $envFile
 fi
 source $envFile
 
