@@ -5,6 +5,7 @@ case $1 in
 Y | y)
     echo "Started a Server with a Judge."
     sudo docker pull 998244353/portable-judge
+    sudo docker-compose pull
     sudo docker rm -f portable-deploy_judge_1
     ;;
 N | n | *)
